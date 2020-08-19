@@ -1,0 +1,33 @@
+{
+	"name": "DataFlowAggregate",
+	"properties": {
+		"activities": [
+			{
+				"name": "TitanicAggregate",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Titanic",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-07-23T06:54:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

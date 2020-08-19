@@ -1,0 +1,65 @@
+{
+	"name": "PassengersCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageDNAPractice",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Passengers.csv",
+				"container": "dnalearning"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "sex",
+				"type": "String"
+			},
+			{
+				"name": "age",
+				"type": "String"
+			},
+			{
+				"name": "ticket",
+				"type": "String"
+			},
+			{
+				"name": "fare",
+				"type": "String"
+			},
+			{
+				"name": "cabin",
+				"type": "String"
+			},
+			{
+				"name": "embarked",
+				"type": "String"
+			},
+			{
+				"name": "boat",
+				"type": "String"
+			},
+			{
+				"name": "body",
+				"type": "String"
+			},
+			{
+				"name": "home.dest",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

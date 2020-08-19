@@ -1,0 +1,32 @@
+{
+	"name": "Movies",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Movie",
+						"type": "DatasetReference"
+					},
+					"name": "Movies"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "MOVSINK",
+						"type": "DatasetReference"
+					},
+					"name": "Mov"
+				}
+			],
+			"transformations": [
+				{
+					"name": "YearExt"
+				}
+			],
+			"script": "source(output(\n\t\tMOVIEID as integer,\n\t\tTITLE as string,\n\t\tGENGRES as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Movies\nMovies derive(Year = toInteger(trim(right(TITLE,4),'()'))) ~> YearExt\nYearExt sink(input(\n\t\tMOVIEID as integer,\n\t\tTITLE as string,\n\t\tGENGRES as string,\n\t\tYEAR as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tMOVIEID,\n\t\tTITLE,\n\t\tGENGRES,\n\t\tYEAR = Year\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Mov"
+		}
+	}
+}

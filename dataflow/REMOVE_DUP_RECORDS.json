@@ -1,0 +1,45 @@
+{
+	"name": "REMOVE_DUP_RECORDS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "EMPsrc",
+						"type": "DatasetReference"
+					},
+					"name": "EMPLOYEES"
+				},
+				{
+					"dataset": {
+						"referenceName": "Emp_new",
+						"type": "DatasetReference"
+					},
+					"name": "NEW"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Target_EMP",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Union1"
+				},
+				{
+					"name": "Distinct"
+				},
+				{
+					"name": "Sort1"
+				}
+			],
+			"script": "source(output(\n\t\temployee_id as integer,\n\t\tfirst_name as string,\n\t\tdepartment_id as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> EMPLOYEES\nsource(output(\n\t\temployee_id as integer,\n\t\tfirst_name as string,\n\t\tdepartment_id as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> NEW\nEMPLOYEES, NEW union(byName: true)~> Union1\nUnion1 aggregate(groupBy(employee_id),\n\teach(match(name!='employee_id'), $$ = first($$))) ~> Distinct\nDistinct sort(asc(employee_id, true)) ~> Sort1\nSort1 sink(input(\n\t\temployee_id as integer,\n\t\tfirst_name as string,\n\t\tdepartment_id as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"name": "MOVSINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TestData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "MOVIEID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TITLE",
+				"type": "varchar"
+			},
+			{
+				"name": "GENGRES",
+				"type": "varchar"
+			},
+			{
+				"name": "YEAR",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "movtitle"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

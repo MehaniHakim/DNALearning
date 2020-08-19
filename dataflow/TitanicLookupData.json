@@ -1,0 +1,53 @@
+{
+	"name": "TitanicLookupData",
+	"properties": {
+		"description": "Lookup on name from Titanic Dataset. Split the data and sort the data into blob storage.",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Titanic",
+						"type": "DatasetReference"
+					},
+					"name": "TitanicDataset"
+				},
+				{
+					"dataset": {
+						"referenceName": "PassengersCSV",
+						"type": "DatasetReference"
+					},
+					"name": "Passenger"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pclass0",
+						"type": "DatasetReference"
+					},
+					"name": "Pclass1Data"
+				},
+				{
+					"dataset": {
+						"referenceName": "pclass0",
+						"type": "DatasetReference"
+					},
+					"name": "sinkpclass0Data"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DataLookup"
+				},
+				{
+					"name": "SplitDatapclass0"
+				},
+				{
+					"name": "SortData"
+				}
+			],
+			"script": "source(output(\n\t\tpclass as string,\n\t\tsurvived as string,\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tsibsp as string,\n\t\tparch as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> TitanicDataset\nsource(output(\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Passenger\nTitanicDataset, Passenger lookup(TitanicDataset@name == Passenger@name,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> DataLookup\nDataLookup split(isMatch(1),\n\tdisjoint: false) ~> SplitDatapclass0@(pclass, pclass0)\nSplitDatapclass0@pclass sort(asc(SplitDatapclass0@pclass@name, true),\n\tcaseInsensitive: true) ~> SortData\nSortData sink(input(\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Pclass1Data\nSplitDatapclass0@pclass0 sink(input(\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkpclass0Data"
+		}
+	}
+}

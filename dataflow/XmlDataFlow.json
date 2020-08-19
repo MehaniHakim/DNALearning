@@ -1,0 +1,32 @@
+{
+	"name": "XmlDataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "AzureBlobStorageDNAPractice",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sourceXml"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Demo",
+						"type": "DatasetReference"
+					},
+					"name": "sinkXml"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: true,\n\tformat: 'xml',\n\tcontainer: 'dnalearning',\n\tfolderPath: 'Practice',\n\tfileName: 'FoodMenu.xml',\n\tvalidationMode: 'none',\n\tnamespaces: false) ~> sourceXml\nsourceXml select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkXml"
+		}
+	}
+}

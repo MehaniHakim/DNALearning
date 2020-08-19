@@ -1,0 +1,32 @@
+{
+	"name": "Emp_new",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TestData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "first_name",
+				"type": "varchar"
+			},
+			{
+				"name": "department_id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employees_new"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

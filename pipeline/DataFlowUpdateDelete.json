@@ -1,0 +1,33 @@
+{
+	"name": "DataFlowUpdateDelete",
+	"properties": {
+		"activities": [
+			{
+				"name": "Titanic",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "TitanicAggregate",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-08-13T12:26:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

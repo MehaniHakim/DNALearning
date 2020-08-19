@@ -1,0 +1,17 @@
+{
+	"name": "Demo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TestData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "SalesOrderDetailTest"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

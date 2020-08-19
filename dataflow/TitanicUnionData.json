@@ -1,0 +1,46 @@
+{
+	"name": "TitanicUnionData",
+	"properties": {
+		"description": "Union,Select,Group by used",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Titanic",
+						"type": "DatasetReference"
+					},
+					"name": "TitanicDataset"
+				},
+				{
+					"dataset": {
+						"referenceName": "PassengersCSV",
+						"type": "DatasetReference"
+					},
+					"name": "PassengerData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pclass0",
+						"type": "DatasetReference"
+					},
+					"name": "sinkData"
+				}
+			],
+			"transformations": [
+				{
+					"name": "UnionData"
+				},
+				{
+					"name": "SelectData"
+				},
+				{
+					"name": "AggregateandGroupData"
+				}
+			],
+			"script": "source(output(\n\t\tpclass as string,\n\t\tsurvived as string,\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tsibsp as string,\n\t\tparch as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> TitanicDataset\nsource(output(\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> PassengerData\nTitanicDataset, PassengerData union(byName: true)~> UnionData\nUnionData select(mapColumn(\n\t\tpclass,\n\t\tsurvived,\n\t\tname,\n\t\tsex,\n\t\tage,\n\t\tparch,\n\t\tticket,\n\t\tfare,\n\t\tcabin,\n\t\tembarked,\n\t\tboat,\n\t\tbody\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectData\nSelectData aggregate(groupBy(age),\n\tfare = avg(toInteger(fare))) ~> AggregateandGroupData\nAggregateandGroupData sink(input(\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkData"
+		}
+	}
+}

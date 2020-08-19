@@ -1,0 +1,32 @@
+{
+	"name": "empsinktarget1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TestData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "first_name",
+				"type": "varchar"
+			},
+			{
+				"name": "department_id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "empsink"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

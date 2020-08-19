@@ -1,0 +1,36 @@
+{
+	"name": "TitanicAggregate",
+	"properties": {
+		"description": "Works on Alter Row Aggregation along with derived Column.",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Titanic",
+						"type": "DatasetReference"
+					},
+					"name": "TitanicDataset"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "FemaleTitanicData",
+						"type": "DatasetReference"
+					},
+					"name": "sinkFemaleData"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeleteUpdate"
+				},
+				{
+					"name": "UpdateColumn"
+				}
+			],
+			"script": "source(output(\n\t\tpclass as string,\n\t\tsurvived as string,\n\t\tname as string,\n\t\tsex as string,\n\t\tage as string,\n\t\tsibsp as string,\n\t\tparch as string,\n\t\tticket as string,\n\t\tfare as string,\n\t\tcabin as string,\n\t\tembarked as string,\n\t\tboat as string,\n\t\tbody as string,\n\t\t{home.dest} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> TitanicDataset\nTitanicDataset alterRow(deleteIf(sex=='female'),\n\tupdateIf(age=='2')) ~> DeleteUpdate\nDeleteUpdate derive(age = age=='2.5') ~> UpdateColumn\nUpdateColumn sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string,\n\t\tColumn_10 as string,\n\t\tColumn_11 as string,\n\t\tColumn_12 as string,\n\t\tColumn_13 as string,\n\t\tColumn_14 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkFemaleData"
+		}
+	}
+}
