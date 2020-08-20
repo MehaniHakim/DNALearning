@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DNALEARNING"
+		},
+		"AS_SAMPLE_1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorageDNAPractice_connectionString": {
+			"value": ""
+		},
+		"PracticeStorage_connectionString": {
+			"value": ""
+		},
+		"Sample1_connectionString": {
+			"value": ""
+		},
+		"SampleTest_connectionString": {
+			"value": ""
+		},
+		"Table1_connectionString": {
+			"value": ""
+		},
+		"TestData_connectionString": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

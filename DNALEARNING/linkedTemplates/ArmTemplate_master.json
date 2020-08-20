@@ -1,0 +1,131 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DNALEARNING"
+		},
+		"AS_SAMPLE_1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AS_SAMPLE_1'"
+		},
+		"AzureBlobStorageDNAPractice_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageDNAPractice'"
+		},
+		"PracticeStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PracticeStorage'"
+		},
+		"Sample1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Sample1'"
+		},
+		"SampleTest_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SampleTest'"
+		},
+		"Table1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Table1'"
+		},
+		"TestData_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TestData'"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "DNALEARNING_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AS_SAMPLE_1_connectionString": {
+						"value": "[parameters('AS_SAMPLE_1_connectionString')]"
+					},
+					"AzureBlobStorageDNAPractice_connectionString": {
+						"value": "[parameters('AzureBlobStorageDNAPractice_connectionString')]"
+					},
+					"PracticeStorage_connectionString": {
+						"value": "[parameters('PracticeStorage_connectionString')]"
+					},
+					"Sample1_connectionString": {
+						"value": "[parameters('Sample1_connectionString')]"
+					},
+					"SampleTest_connectionString": {
+						"value": "[parameters('SampleTest_connectionString')]"
+					},
+					"Table1_connectionString": {
+						"value": "[parameters('Table1_connectionString')]"
+					},
+					"TestData_connectionString": {
+						"value": "[parameters('TestData_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "DNALEARNING_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'DNALEARNING_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "DNALEARNING_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'DNALEARNING_ArmTemplate_1')]"
+			]
+		}
+	]
+}
