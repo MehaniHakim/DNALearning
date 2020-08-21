@@ -965,14 +965,14 @@
 							"storedProcedureParameters": {
 								"LastModifiedtime": {
 									"value": {
-										"value": "{\"value\": \"@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkvalue}\", \"type\": \"datetime\" }",
+										"value": "@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkvalue}",
 										"type": "Expression"
 									},
 									"type": "DateTime"
 								},
 								"TableName": {
 									"value": {
-										"value": "{ \"value\":\"@{activity('LookupOldWaterMarkActivity').output.firstRow.TableName}\", \"type\":\"String\"}",
+										"value": "@{activity('LookupOldWaterMarkActivity').output.firstRow.TableName}",
 										"type": "Expression"
 									},
 									"type": "String"
