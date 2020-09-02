@@ -1,0 +1,20 @@
+{
+	"name": "DF_Snowflake",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "Snowflake",
+						"type": "LinkedServiceReference"
+					},
+					"name": "SFCC"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tformat: 'table',\n\ttableName: '',\n\tschemaName: '',\n\tstore: 'snowflake') ~> SFCC"
+		}
+	}
+}
