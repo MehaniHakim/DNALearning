@@ -1,0 +1,16 @@
+{
+	"name": "SnowflakeDF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Snowflake_Centric",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CDM",
+			"table": "PK_DEMO_TABLE"
+		}
+	}
+}
