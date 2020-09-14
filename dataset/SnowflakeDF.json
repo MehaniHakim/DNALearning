@@ -1,0 +1,28 @@
+{
+	"name": "SnowflakeDF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Snowflake_Centric",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "DESCRIPTION",
+				"type": "VARCHAR",
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "POC",
+			"table": "SAMPLE_TABLE"
+		}
+	}
+}
